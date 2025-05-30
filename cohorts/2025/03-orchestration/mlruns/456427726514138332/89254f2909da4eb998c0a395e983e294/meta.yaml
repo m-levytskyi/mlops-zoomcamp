@@ -1,0 +1,15 @@
+artifact_uri: file:///home/levytskyi/Documents/MLOps Zoomcamp/mlops-zoomcamp/cohorts/2025/03-orchestration/mlruns/456427726514138332/89254f2909da4eb998c0a395e983e294/artifacts
+end_time: 1748613458250
+entry_point_name: ''
+experiment_id: '456427726514138332'
+lifecycle_stage: active
+run_id: 89254f2909da4eb998c0a395e983e294
+run_name: bittersweet-calf-388
+run_uuid: 89254f2909da4eb998c0a395e983e294
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748613454240
+status: 3
+tags: []
+user_id: levytskyi

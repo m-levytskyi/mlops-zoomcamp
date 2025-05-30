@@ -1,0 +1,6 @@
+artifact_location: file:///home/levytskyi/Documents/MLOps Zoomcamp/mlops-zoomcamp/cohorts/2025/03-orchestration/mlruns/456427726514138332
+creation_time: 1748613453949
+experiment_id: '456427726514138332'
+last_update_time: 1748613453949
+lifecycle_stage: active
+name: prefect-nyc-taxi
