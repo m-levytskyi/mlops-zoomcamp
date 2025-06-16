@@ -1,33 +1,22 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[1]:
-
-
-get_ipython().system('pip freeze | grep scikit-learn')
-
-
-# In[2]:
-
-
-get_ipython().system('python -V')
-
-
-# In[3]:
-
-
 import pickle
 import pandas as pd
+import sys
 
 
-# In[4]:
+# Parse command line arguments
+if len(sys.argv) != 3:
+    print('Usage: python starter.py <year> <month>')
+    sys.exit(1)
+
+year = int(sys.argv[1])
+month = int(sys.argv[2])
 
 
+# Load the model
 with open('model.bin', 'rb') as f_in:
     dv, model = pickle.load(f_in)
-
-
-# In[5]:
 
 
 categorical = ['PULocationID', 'DOLocationID']
@@ -45,62 +34,29 @@ def read_data(filename):
     return df
 
 
-# In[7]:
+# Construct the URL using the provided year and month
+url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{year:04d}-{month:02d}.parquet'
+df = read_data(url)
 
 
-df = read_data('https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-03.parquet')
-
-
-# In[8]:
-
-
+# Make predictions
 dicts = df[categorical].to_dict(orient='records')
 X_val = dv.transform(dicts)
 y_pred = model.predict(X_val)
 
-
-# In[9]:
-
-
-y_pred.std()
+# Print the mean predicted duration
+mean_duration = y_pred.mean()
+print(f'Mean predicted duration: {mean_duration:.2f} minutes')
 
 
-# In[12]:
-
-
-year = 2023
-month = 3
-
-
-# In[13]:
-
-
+# Create ride IDs and save results
 df['ride_id'] = f'{year:04d}/{month:02d}_' + df.index.astype('str')
-
-
-# In[14]:
-
-
-df.head(n=3)
-
-
-# In[15]:
-
 
 df_result = pd.DataFrame()
 df_result['ride_id'] = df['ride_id']
 df_result['prediction'] = y_pred
-df_result.head(n=3)
-
-
-# In[17]:
-
 
 output_file = f'yellow_tripdata_{year:04d}-{month:02d}_predictions.parquet'
-
-
-# In[18]:
-
 
 df_result.to_parquet(
     output_file,
